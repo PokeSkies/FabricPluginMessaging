@@ -62,7 +62,6 @@ dependencies {
 
     modImplementation("net.fabricmc:fabric-loader:${project.properties["loader_version"].toString()}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.properties["fabric_version"].toString()}")
-    modImplementation("net.fabricmc:fabric-language-kotlin:${project.properties["fabric_kotlin_version"].toString()}")
 }
 
 tasks.processResources {
