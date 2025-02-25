@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "fabricpluginmessaging",
+  "version": "${version}",
+  "name": "FabricPluginMessaging",
+  "description": "Standard plugin messaging for Fabric",
+  "authors": [
+    "Stampede"
+  ],
+  "entrypoints": {
+    "main": [
+      "com.pokeskies.fabricpluginmessaging.FabricPluginMessaging"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": ">=1.21.1"
+  }
+}
