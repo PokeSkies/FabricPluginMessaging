@@ -96,7 +96,7 @@ tasks.processResources {
 }
 
 tasks.remapJar {
-    archiveFileName.set("${project.name}-fabric-$minecraftVersion-${project.version}.jar")
+    archiveFileName.set("${project.name}-${project.version}.jar")
 }
 
 tasks.withType<JavaCompile> {
