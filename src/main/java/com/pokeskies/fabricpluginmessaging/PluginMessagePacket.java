@@ -6,10 +6,14 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInput;
+import java.io.DataInputStream;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class PluginMessagePacket implements CustomPacketPayload {
+public final class PluginMessagePacket implements CustomPacketPayload {
     private final byte[] data;
 
     public PluginMessagePacket(byte[] data) {
@@ -20,11 +24,11 @@ public class PluginMessagePacket implements CustomPacketPayload {
         this(getWrittenBytes(buf));
     }
 
-    public static CustomPacketPayload.Type<PluginMessagePacket> CHANNEL_ID = new CustomPacketPayload.Type<>(
+    public static final CustomPacketPayload.Type<PluginMessagePacket> CHANNEL_ID = new CustomPacketPayload.Type<>(
             FabricPluginMessaging.BUNGEE_CHANNEL
     );
 
-    public static StreamCodec<RegistryFriendlyByteBuf, PluginMessagePacket> CODEC = StreamCodec.ofMember(
+    public static final StreamCodec<RegistryFriendlyByteBuf, PluginMessagePacket> CODEC = StreamCodec.ofMember(
             (value, buf) -> writeBytes(buf, value.data),
             PluginMessagePacket::new
     );
@@ -44,8 +48,31 @@ public class PluginMessagePacket implements CustomPacketPayload {
         return CHANNEL_ID;
     }
 
+    /**
+     * Gets the message data. The array is copied to prevent multiple listeners from affecting each other.
+     *
+     * @return a copy of the data
+     */
     public byte[] getData() {
-        return data;
+        return data.clone();
+    }
+
+    /**
+     * Gets the message data as an input stream
+     *
+     * @return the data as a stream
+     */
+    public InputStream getDataStream() {
+        return new ByteArrayInputStream(data);
+    }
+
+    /**
+     * Gets the message data as a data input stream
+     *
+     * @return the data as a data input
+     */
+    public DataInput getDataInput() {
+        return new DataInputStream(getDataStream());
     }
 
     @Override
